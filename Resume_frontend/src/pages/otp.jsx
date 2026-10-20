@@ -37,33 +37,32 @@ function Otp(){
     }
 }
 return(
-    <>
-      <h1><mark>Verify Otp</mark></h1>
-      <form onSubmit={handleVerify}>
-        <input
-        type="email"
-        placeholder="Enter your email"
-        value={email}
-        onChange={(e) => setemail(e.target.value)}
-        required
-            />
+     <div className="otp-container">
+      <div className="otp-card">
+        <h1>Verify OTP</h1>
+        <p>Enter your email and the OTP sent to you.</p>
 
-             <input
-        type="text"
-        placeholder="Enter your otp"
-        value={otp}
-        onChange={(e) => setotp(e.target.value)}
-        required
-            />
+        <form onSubmit={handleVerify}>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setemail(e.target.value)}
+            required
+          />
 
-             <button type="submit">Verify OTP</button>
+          <input
+            type="text"
+            placeholder="Enter your OTP"
+            value={otp}
+            onChange={(e) => setotp(e.target.value)}
+            required
+          />
 
-      </form>
-
-
-      </>
-
-
+          <button type="submit">Verify OTP</button>
+        </form>
+      </div>
+    </div>
 )
 }
 export default Otp

@@ -1,0 +1,138 @@
+
+* {
+  box-sizing: border-box;
+}
+
+.otp-container {
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.otp-card {
+  width: 100%;
+  max-width: 420px;
+  padding: clamp(22px, 5vw, 36px);
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.otp-card h1 {
+  margin: 0 0 12px;
+  color: #0f172a;
+  font-size: clamp(26px, 5vw, 32px);
+  text-align: center;
+}
+
+.otp-card p {
+  margin: 0 0 26px;
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.otp-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.otp-card input {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #0f172a;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.otp-card input::placeholder {
+  color: #94a3b8;
+}
+
+.otp-card input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  background: #ffffff;
+}
+
+.otp-card button {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.otp-card button:hover {
+  background: #1d4ed8;
+}
+
+.otp-card button:active {
+  transform: scale(0.98);
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .otp-container {
+    padding: 16px;
+  }
+
+  .otp-card {
+    padding: 24px 20px;
+    border-radius: 12px;
+  }
+
+  .otp-card p {
+    font-size: 14px;
+    margin-bottom: 22px;
+  }
+
+  .otp-card form {
+    gap: 13px;
+  }
+}
+
+/* Very small mobile screens */
+@media (max-width: 320px) {
+  .otp-container {
+    padding: 10px;
+  }
+
+  .otp-card {
+    padding: 20px 14px;
+  }
+
+  .otp-card h1 {
+    font-size: 24px;
+  }
+}
+
+/* Short landscape screens */
+@media (max-height: 500px) and (orientation: landscape) {
+  .otp-container {
+    align-items: flex-start;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+}

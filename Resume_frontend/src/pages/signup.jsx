@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./signup.css";
+import { useNavigate } from "react-router-dom";
 import {
   FileUser,
   UserRound,
@@ -11,6 +12,8 @@ import {
 function Signup(){
     const API_URL = "http://localhost:8000/api/auth/signup"
 
+    const navigate = useNavigate();
+    
     const[formdata,setformdata]=useState({
         userName:"",
         email:"",
@@ -44,10 +47,12 @@ function Signup(){
       if(!response.ok){
         console.log("unsuccesful")
         alert(data.message||"signup unsuccesfull");
-       // ReceiptPoundSterling
+        ReceiptPoundSterling
+        return
       }
       alert(data.message||"signup succesfull,check email for your otp")
     console.log("succesfull")
+    navigate("/otp")
     }
     catch(error){
         console.log("server issue")
