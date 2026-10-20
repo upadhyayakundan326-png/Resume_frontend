@@ -115,11 +115,20 @@ function Signup(){
         </div>
 
         <button type="submit">Create Account</button>
+        <div className="login">
+        <p className="signup-footer">
+  Already have an account?{" "}
+  <span onClick={() => navigate("/login")}>
+    Login
+  </span>
+</p>
+</div>
 
         {message && (
           <p className="signup-message" role="status">
             {message}
           </p>
+          
         )}
       </form>
     </main>

@@ -197,4 +197,24 @@
     min-height: 48px;
     margin-top: 24px;
   }
+  .signup-footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.signup-footer span {
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
+}
+.signup-footer span:hover {
+  text-decoration: underline;
+}
+.login{
+  text-align: center;
 }
