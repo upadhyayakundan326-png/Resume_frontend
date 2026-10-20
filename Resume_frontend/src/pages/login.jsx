@@ -2,6 +2,7 @@
 import { useState } from "react";
 import "./login.css";
 import { useNavigate, Link } from "react-router-dom";
+
 import {
   FileUser,
   Mail,
@@ -105,6 +106,11 @@ function Login() {
             required
           />
         </div>
+           <div className="forgot-password">
+    <Link to="/forgot-password">
+        Forgot Password?
+    </Link>
+</div>
 
         <button type="submit" disabled={loading}>
           {loading ? "Logging in..." : "Login"}

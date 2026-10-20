@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+   
 }
 
 html,
@@ -8,6 +9,11 @@ body,
   width: 100%;
   min-height: 100%;
   margin: 0;
+}
+body{
+   
+  background-color: #EAE8E4;
+
 }
 
 .login-container {
@@ -160,3 +166,20 @@ body,
     font-size: 25px;
   }
 }
+
+.forgot-password {
+    text-align: right;
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+
+.forgot-password a {
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
