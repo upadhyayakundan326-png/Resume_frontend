@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import "./forgot.css"
 
 function ForgotPassword() {
     const [email, setEmail] = useState("");
@@ -67,7 +68,7 @@ function ForgotPassword() {
                 </button>
 
                 <p>
-                    Remember your password? <Link to="/login">Login</Link>
+                    Remember your password? <Link to="/">Login</Link>
                 </p>
             </form>
         </div>

@@ -1,0 +1,119 @@
+.reset-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #EAE8E4;
+    box-sizing: border-box;
+}
+
+.reset-form {
+    width: 100%;
+    max-width: 420px;
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+}
+
+.reset-form h2 {
+    margin: 0 0 12px;
+    color: #222222;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.reset-form p {
+    margin: 0 0 22px;
+    color: #737373;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.reset-form input {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 18px;
+    border: 1px solid #d6d3d1;
+    border-radius: 9px;
+    background: #fafafa;
+    color: #222222;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.reset-form input:focus {
+    border-color: #333333;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+.reset-form button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 9px;
+    background: #222222;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.reset-form button:hover {
+    background: #444444;
+}
+
+.reset-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.reset-form .reset-message {
+    margin: 0 0 16px;
+    color: #b42318;
+    font-size: 14px;
+}
+
+.reset-form .reset-footer {
+    margin: 22px 0 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+.reset-form a {
+    color: #222222;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.reset-form a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .reset-form {
+        padding: 26px 22px;
+    }
+
+    .reset-form h2 {
+        font-size: 24px;
+    }
+}
+.i1{
+    margin-bottom: 10px;
+    padding:10px,
+
+    
+}
+.i2{
+  
+    padding:10px,
+    
+}

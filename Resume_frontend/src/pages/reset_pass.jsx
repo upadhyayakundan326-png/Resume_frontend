@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
+import"./reset.css"
 
 function ResetPassword() {
     const [searchParams] = useSearchParams();
@@ -58,6 +59,7 @@ function ResetPassword() {
                 <p>OTP sent to: {email}</p>
 
                 <input
+                   className="i1"
                     type="text"
                     placeholder="Enter 6-digit OTP"
                     value={otp}
@@ -67,6 +69,7 @@ function ResetPassword() {
                 />
 
                 <input
+                    className="i2"
                     type="password"
                     placeholder="Enter new password"
                     value={newPassword}
@@ -81,7 +84,7 @@ function ResetPassword() {
                     {loading ? "Resetting..." : "Reset Password"}
                 </button>
 
-                <p><Link to="/login">Back to Login</Link></p>
+                <p><Link to="/">Back to Login</Link></p>
             </form>
         </div>
     );

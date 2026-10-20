@@ -1,0 +1,114 @@
+
+/* Forgot Password Page */
+
+.forgot-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #EAE8E4;
+    box-sizing: border-box;
+}
+
+.forgot-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 35px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+}
+
+.forgot-form h2 {
+    margin: 0 0 12px;
+    color: #222222;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.forgot-form p {
+    margin: 0 0 24px;
+    color: #737373;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.forgot-form input {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 18px;
+    border: 1px solid #d6d3d1;
+    border-radius: 9px;
+    background-color: #fafafa;
+    color: #222222;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.forgot-form input:focus {
+    border-color: #333333;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+.forgot-form button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 9px;
+    background-color: #222222;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.forgot-form button:hover {
+    background-color: #444444;
+}
+
+.forgot-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.forgot-form .forgot-message {
+    margin: 0 0 16px;
+    color: #b42318;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.forgot-form .forgot-footer {
+    margin: 22px 0 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+.forgot-form a {
+    color: #222222;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.forgot-form a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .forgot-form {
+        padding: 26px 22px;
+    }
+
+    .forgot-form h2 {
+        font-size: 24px;
+    }
+}
+input{
+    padding: 10px;
+}
