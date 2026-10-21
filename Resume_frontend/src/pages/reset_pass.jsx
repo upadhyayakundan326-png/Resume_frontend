@@ -84,7 +84,7 @@ function ResetPassword() {
                     {loading ? "Resetting..." : "Reset Password"}
                 </button>
 
-                <p><Link to="/">Back to Login</Link></p>
+                <p><Link to="/login">Back to Login</Link></p>
             </form>
         </div>
     );

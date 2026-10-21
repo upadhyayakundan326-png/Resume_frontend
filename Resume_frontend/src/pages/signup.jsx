@@ -118,7 +118,7 @@ function Signup(){
         <div className="login">
         <p className="signup-footer">
   Already have an account?{" "}
-  <span onClick={() => navigate("/")}>
+  <span onClick={() => navigate("/login")}>
     Login
   </span>
 </p>

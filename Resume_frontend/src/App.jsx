@@ -6,11 +6,14 @@ import "./App.css";
 import Login from "./pages/login";
 import ForgotPassword from "./pages/forgot_pass";
 import ResetPassword from "./pages/reset_pass";
+import Home from "./pages/home";
+
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/otp" element={<Otp />} />
       <Route
