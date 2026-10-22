@@ -10,7 +10,7 @@ import {
   ArrowRight,
   Sparkles,
 } from "lucide-react";
-//import "./Home.css";
+import "./Home.css";
 
 function Home() {
   const navigate = useNavigate();

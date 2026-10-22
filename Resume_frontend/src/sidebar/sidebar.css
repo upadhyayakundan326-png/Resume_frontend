@@ -1,0 +1,126 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 255px;
+  min-width: 255px;
+  min-height: 100vh;
+  padding: 25px 16px;
+  background: rgba(249, 245, 255, 0.95);
+  border-right: 1px solid #e9e2f6;
+  box-sizing: border-box;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 4px 7px 32px;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 43px;
+  height: 43px;
+  flex-shrink: 0;
+  color: white;
+  background: linear-gradient(135deg, #b14cff, #00bfa8);
+  border-radius: 13px;
+  box-shadow: 0 5px 14px #9b75e533;
+}
+
+.sidebar-brand h2 {
+  margin: 0;
+  color: #29334c;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.sidebar-brand p {
+  margin: 5px 0 0;
+  color: #81869b;
+  font-size: 11px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 12px;
+  color: #59627b;
+  border-radius: 11px;
+  text-decoration: none;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.sidebar-link:hover {
+  color: #8545d8;
+  background: #efe6ff;
+}
+
+.sidebar-link.active {
+  color: white;
+  background: linear-gradient(
+    105deg,
+    #b14cff,
+    #8076f1 55%,
+    #00bfa8
+  );
+  box-shadow: 0 6px 15px #9874e52b;
+}
+
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: auto;
+  padding: 12px;
+  color: #526bc0;
+  background: #e7eeff;
+  border: 1px solid #d5e0ff;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.sidebar-status-dot {
+  width: 8px;
+  height: 8px;
+  background: #647ff4;
+  border-radius: 50%;
+}
+
+@media (max-width: 650px) {
+  .sidebar {
+    width: 100%;
+    min-width: 0;
+    min-height: auto;
+    padding: 16px;
+  }
+
+  .sidebar-brand {
+    padding-bottom: 18px;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .sidebar-link {
+    gap: 7px;
+    padding: 10px;
+    font-size: 11px;
+  }
+
+  .sidebar-footer {
+    display: none;
+  }
+}
