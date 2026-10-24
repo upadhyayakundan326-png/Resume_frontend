@@ -24,15 +24,12 @@ function Sidebar() {
       </div>
 
       <nav className="sidebar-nav">
-        <NavLink to="/dashboard" className="sidebar-link">
+        <NavLink to="/analyse" className="sidebar-link">
           <LayoutDashboard size={19} />
-          <span>Dashboard</span>
+          <span>Analyse</span>
         </NavLink>
 
-        <NavLink to="/analyzer" className="sidebar-link">
-          <FileSearch size={19} />
-          <span>Resume Analyzer</span>
-        </NavLink>
+        
 
         <NavLink to="/resumes" className="sidebar-link">
           <Files size={19} />
@@ -47,6 +44,11 @@ function Sidebar() {
         <NavLink to="/profile" className="sidebar-link">
           <UserRound size={19} />
           <span>Profile</span>
+        </NavLink>
+
+        <NavLink to="/logout" className="sidebar-link">
+          <FileSearch size={19} />
+          <span>Log out</span>
         </NavLink>
       </nav>
 

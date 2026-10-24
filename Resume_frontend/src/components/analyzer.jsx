@@ -15,7 +15,10 @@ import {
 
 import Sidebar from "../sidebar/sidebar";
 import AnalysisResult from "./analysis";
-import "./dashboard.css";
+import { fetchJobsApi } from "../api/jobapi";
+import { uploadResumeApi } from "../api/uploadapi";
+import { fetchResumeStatusApi } from "../api/statesapi";
+import "./analyzer.css";
 
 function Dashboard() {
   const [resume, setResume] = useState(null);
@@ -29,25 +32,13 @@ function Dashboard() {
 
   const pollingRef = useRef(null);
 
-  // Fetch saved jobs from backend
-  async function fetchJobs() {
+  // 1. JOBS API
+  async function loadJobs() {
     setJobsLoading(true);
 
     try {
-      const response = await fetch(
-        "http://localhost:8000/api/job",
-        {
-          credentials: "include"
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to load jobs");
-      }
-
-      setJobs(data.jobs || []);
+      const jobsData = await fetchJobsApi();
+      setJobs(jobsData);
     } catch (error) {
       setMessage(error.message);
       setMessageType("error");
@@ -57,14 +48,14 @@ function Dashboard() {
   }
 
   useEffect(() => {
-    fetchJobs();
+    loadJobs();
 
     return () => {
       clearTimeout(pollingRef.current);
     };
   }, []);
 
-  // Validate selected resume file
+  // Resume file validation
   function handleFileChange(e) {
     const file = e.target.files[0];
 
@@ -91,26 +82,13 @@ function Dashboard() {
     setMessageType("");
   }
 
-  // Poll resume status every 2 seconds
+  // 3. STATES API POLLING
   async function pollResumeStatus(resumeId) {
     clearTimeout(pollingRef.current);
 
     async function checkStatus() {
       try {
-        const response = await fetch(
-          `http://localhost:8000/api/states/getStates/${resumeId}`,
-          {
-            credentials: "include"
-          }
-        );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.message || "Failed to get resume status"
-          );
-        }
+        const data = await fetchResumeStatusApi(resumeId);
 
         setAnalysis((prev) => {
           if (!prev) return prev;
@@ -125,7 +103,6 @@ function Dashboard() {
           };
         });
 
-        // Stop polling when analysis finishes
         if (
           data.status === "completed" ||
           data.status === "failed"
@@ -137,14 +114,13 @@ function Dashboard() {
         console.error("Polling error:", error);
       }
 
-      // Check again after 2 seconds
       pollingRef.current = setTimeout(checkStatus, 2000);
     }
 
     await checkStatus();
   }
 
-  // Upload resume for analysis
+  // 2. UPLOAD API
   async function handleAnalyse(e) {
     e.preventDefault();
 
@@ -159,36 +135,16 @@ function Dashboard() {
     setMessageType("");
     setAnalysis(null);
 
-    // Stop any previous polling
     clearTimeout(pollingRef.current);
     pollingRef.current = null;
 
     try {
-      const formData = new FormData();
+      const data = await uploadResumeApi(resume, selectedJobId);
 
-      formData.append("resume", resume);
-      formData.append("jobId", selectedJobId);
+      const resumeId = data.resume?._id;
 
-      const response = await fetch(
-        "http://localhost:8000/api/resume/upload",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.message || "Resume upload failed"
-        );
-      }
-
-      // Save initial response in state
       setAnalysis({
-        resumeId: data.resume?._id,
+        resumeId,
         status: data.status || "queued",
         score: data.resume?.score ?? null,
         summary: data.resume?.analysis || "",
@@ -196,16 +152,11 @@ function Dashboard() {
         improvements: data.resume?.improvement || []
       });
 
-      // Start polling after successful upload
-      const resumeId = data.resume?._id;
-
       if (resumeId) {
         pollResumeStatus(resumeId);
       }
 
-      setMessage(
-        data.message || "Resume submitted successfully."
-      );
+      setMessage(data.message || "Resume submitted successfully.");
       setMessageType("success");
 
       setResume(null);
@@ -246,7 +197,7 @@ function Dashboard() {
           <button
             type="button"
             className="refresh-jobs-btn"
-            onClick={fetchJobs}
+            onClick={loadJobs}
             disabled={jobsLoading}
           >
             <RefreshCw size={15} />
@@ -254,16 +205,11 @@ function Dashboard() {
           </button>
         </header>
 
-        {/* Resume upload section */}
         <section className="upload-card">
           <div className="section-heading">
             <div>
-              <span className="dashboard-eyebrow">
-                STEP 01
-              </span>
-
+              <span className="dashboard-eyebrow">STEP 01</span>
               <h2>Upload your resume</h2>
-
               <p>
                 Choose a target job to compare your resume against.
               </p>
@@ -292,9 +238,7 @@ function Dashboard() {
                 required
               >
                 <option value="">
-                  {jobsLoading
-                    ? "Loading jobs..."
-                    : "Select a saved job"}
+                  {jobsLoading ? "Loading jobs..." : "Select a saved job"}
                 </option>
 
                 {jobs.map((job) => (
@@ -306,16 +250,12 @@ function Dashboard() {
 
               {!jobsLoading && jobs.length === 0 && (
                 <p className="helper-text">
-                  No saved jobs yet.{" "}
-                  <Link to="/jobs">Create a job first</Link>
+                  No saved jobs yet. <Link to="/jobs">Create a job first</Link>
                 </p>
               )}
             </div>
 
-            <label
-              className="resume-dropzone"
-              htmlFor="resumeFile"
-            >
+            <label className="resume-dropzone" htmlFor="resumeFile">
               <input
                 id="resumeFile"
                 type="file"
@@ -329,9 +269,7 @@ function Dashboard() {
                 <Upload size={27} />
               </div>
 
-              <h3>
-                {resume ? resume.name : "Upload Resume"}
-              </h3>
+              <h3>{resume ? resume.name : "Upload Resume"}</h3>
 
               <p>
                 {resume
@@ -349,15 +287,12 @@ function Dashboard() {
             </label>
 
             {message && (
-              <div
-                className={`dashboard-message ${messageType}`}
-              >
+              <div className={`dashboard-message ${messageType}`}>
                 {messageType === "error" ? (
                   <AlertCircle size={17} />
                 ) : (
                   <CheckCircle2 size={17} />
                 )}
-
                 <span>{message}</span>
               </div>
             )}
@@ -371,18 +306,11 @@ function Dashboard() {
               <button
                 type="submit"
                 className="analyse-button"
-                disabled={
-                  loading ||
-                  jobsLoading ||
-                  jobs.length === 0
-                }
+                disabled={loading || jobsLoading || jobs.length === 0}
               >
                 {loading ? (
                   <>
-                    <LoaderCircle
-                      size={17}
-                      className="spin"
-                    />
+                    <LoaderCircle size={17} className="spin" />
                     Uploading...
                   </>
                 ) : (
@@ -396,7 +324,7 @@ function Dashboard() {
           </form>
         </section>
 
-        {/* Display resume analysis */}
+        {/* Props pass karke analysis UI dikhana */}
         <AnalysisResult analysis={analysis} />
       </main>
     </div>

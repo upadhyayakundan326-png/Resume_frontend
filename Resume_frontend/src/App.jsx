@@ -7,8 +7,9 @@ import Login from "./pages/login";
 import ForgotPassword from "./pages/forgot_pass";
 import ResetPassword from "./pages/reset_pass";
 import Home from "./pages/home";
-import Dashboard from "./components/dashboard";
+import Dashboard from "./components/analyzer";
 import Jobs from "./pages/job";
+import MyResumes from "./components/myresumes";
 
 function App() {
   return (
@@ -17,8 +18,9 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/otp" element={<Otp />} />
-       <Route path="/dashboard" element={<Dashboard />} />
+       <Route path="/analyse" element={<Dashboard />} />
        <Route path="/jobs" element={<Jobs />} />
+       <Route path="/resumes" element={<MyResumes />} />
       
 
       <Route path="/forgot-password"

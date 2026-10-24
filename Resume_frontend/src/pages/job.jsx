@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { BriefcaseBusiness, Plus, CheckCircle } from "lucide-react";
 import "./job.css";
+import Sidebar from "../sidebar/sidebar";
 
 function Jobs() {
     const [formData, setFormData] = useState({
@@ -74,90 +75,110 @@ function Jobs() {
         }
     }
 
-    return (
-        <div className="jobs-page">
-            <div className="jobs-heading">
+return (
+    <div className="jobs-page">
+        <Sidebar />
+
+        <main className="jobs-content">
+            <header className="jobs-heading">
                 <div className="jobs-heading-icon">
                     <BriefcaseBusiness size={25} />
                 </div>
 
                 <div>
                     <h1>Jobs</h1>
-                    <p>Save a job description to analyse your resume against it.</p>
-                </div>
-            </div>
-
-            <form className="jobs-form" onSubmit={handleSubmit}>
-                <h2>Create a Job</h2>
-                <p className="jobs-form-subtitle">
-                    Add the role requirements you want to match your resume with.
-                </p>
-
-                <label htmlFor="title">Job Title</label>
-                <input
-                    id="title"
-                    name="title"
-                    value={formData.title}
-                    onChange={handleChange}
-                    placeholder="e.g. Frontend Developer"
-                    required
-                />
-
-                <label htmlFor="company">Company Name</label>
-                <input
-                    id="company"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                    placeholder="e.g. ABC Technologies"
-                    required
-                />
-
-                <label htmlFor="description">Job Description</label>
-                <textarea
-                    id="description"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    placeholder="Paste the complete job description here..."
-                    rows={7}
-                    required
-                />
-
-                <label htmlFor="requiredSkills">
-                    Required Skills
-                </label>
-                <input
-                    id="requiredSkills"
-                    name="requiredSkills"
-                    value={formData.requiredSkills}
-                    onChange={handleChange}
-                    placeholder="React, JavaScript, Node.js"
-                />
-
-                {message && (
-                    <p className={error ? "jobs-error" : "jobs-success"}>
-                        {message}
+                    <p>
+                        Save a job description to analyse your resume against it.
                     </p>
-                )}
+                </div>
+            </header>
 
-                <button
-                    type="submit"
-                    className="save-job-button"
-                    disabled={loading}
-                >
-                    {loading ? (
-                        "Saving..."
-                    ) : (
-                        <>
-                            <Plus size={18} />
-                            Save Job
-                        </>
+            <section className="jobs-form-card">
+                <div className="jobs-form-header">
+                    <h2>Create a Job</h2>
+                    <p>
+                        Add the role requirements you want to match your resume with.
+                    </p>
+                </div>
+
+                <form className="jobs-form" onSubmit={handleSubmit}>
+                    <div className="jobs-field">
+                        <label htmlFor="title">Job Title</label>
+                        <input
+                            id="title"
+                            name="title"
+                            value={formData.title}
+                            onChange={handleChange}
+                            placeholder="e.g. Frontend Developer"
+                            required
+                        />
+                    </div>
+
+                    <div className="jobs-field">
+                        <label htmlFor="company">Company Name</label>
+                        <input
+                            id="company"
+                            name="company"
+                            value={formData.company}
+                            onChange={handleChange}
+                            placeholder="e.g. ABC Technologies"
+                            required
+                        />
+                    </div>
+
+                    <div className="jobs-field">
+                        <label htmlFor="description">Job Description</label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                            placeholder="Paste the complete job description here..."
+                            rows={6}
+                            required
+                        />
+                    </div>
+
+                    <div className="jobs-field">
+                        <label htmlFor="requiredSkills">Required Skills</label>
+                        <input
+                            id="requiredSkills"
+                            name="requiredSkills"
+                            value={formData.requiredSkills}
+                            onChange={handleChange}
+                            placeholder="React, JavaScript, Node.js"
+                        />
+                        <span className="jobs-field-hint">
+                            Separate each skill with a comma.
+                        </span>
+                    </div>
+
+                    {message && (
+                        <p className={error ? "jobs-error" : "jobs-success"}>
+                            {message}
+                        </p>
                     )}
-                </button>
-            </form>
-        </div>
-    );
+
+                    <button
+                        type="submit"
+                        className="save-job-button"
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            "Saving..."
+                        ) : (
+                            <>
+                                <Plus size={18} />
+                                Save Job
+                            </>
+                        )}
+                    </button>
+                </form>
+            </section>
+        </main>
+    </div>
+);
+
 }
 
 export default Jobs;

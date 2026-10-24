@@ -1,109 +1,120 @@
 
-import { Link } from "react-router-dom";
-import { FileSearch, FileText } from "lucide-react";
+import {
+  FileSearch,
+  LoaderCircle,
+  CheckCircle2,
+  AlertCircle,
+  Sparkles
+} from "lucide-react";
 
 function AnalysisResult({ analysis }) {
+  if (!analysis) {
+    return null;
+  }
+
+  const isProcessing =
+    analysis.status === "queued" ||
+    analysis.status === "processing";
+
   return (
-    <section className="analysis-card">
+    <section className="upload-card analysis-card">
       <div className="section-heading">
         <div>
           <span className="dashboard-eyebrow">STEP 02</span>
-          <h2>Analysis Results</h2>
-          <p>Your resume score and AI recommendations appear here.</p>
+          <h2>Resume Analysis</h2>
+          <p>AI-powered insights for your selected job.</p>
         </div>
 
-        <div className="section-icon results-icon">
-          <FileText size={23} />
+        <div className="section-icon">
+          <FileSearch size={24} />
         </div>
       </div>
 
-      {!analysis ? (
-        <div className="empty-results">
-          <div className="empty-icon">
-            <FileSearch size={28} />
-          </div>
+      {isProcessing && (
+        <div className="analysis-status">
+          <LoaderCircle size={22} className="spin" />
 
-          <h3>No analysis yet</h3>
-          <p>
-            Upload your resume and click Analyse Resume to get started.
-          </p>
+          <h3>
+            {analysis.status === "queued"
+              ? "Resume queued for analysis"
+              : "Analyzing your resume..."}
+          </h3>
+
+          <p>Please wait while the analysis is being processed.</p>
         </div>
-      ) : (
-        <div className="analysis-result-content">
-          <div className="result-status">
-            <span>Analysis Status</span>
-            <strong>{analysis.status}</strong>
+      )}
+
+      {analysis.status === "failed" && (
+        <div className="analysis-status">
+          <AlertCircle size={22} />
+
+          <h3>Analysis failed</h3>
+
+          <p>Please try uploading your resume again.</p>
+        </div>
+      )}
+
+      {analysis.status === "completed" && (
+        <>
+          <div className="analysis-score">
+            <Sparkles size={22} />
+
+            <h3>Resume Score</h3>
+
+            <p>
+              {analysis.score ?? "N/A"}
+              {analysis.score !== null &&
+              analysis.score !== undefined
+                ? "/100"
+                : ""}
+            </p>
           </div>
 
-          {analysis.score !== null && (
-            <div className="score-section">
-              <div className="score-circle">
-                <strong>{analysis.score}</strong>
-                <span>/100</span>
-              </div>
+          <div className="analysis-summary">
+            <h3>Analysis Summary</h3>
 
-              <div>
-                <h3>Resume Score</h3>
-                <p>
-                  {analysis.score >= 80
-                    ? "Great match! Keep refining your resume."
-                    : analysis.score >= 60
-                      ? "Good start. Check your improvement suggestions."
-                      : "Review the recommendations to improve your resume."}
-                </p>
-              </div>
-            </div>
-          )}
+            <p>
+              {analysis.summary || "No summary available."}
+            </p>
+          </div>
 
-          {analysis.summary && (
-            <div className="result-detail">
-              <h3>AI Analysis</h3>
-              <p>{analysis.summary}</p>
-            </div>
-          )}
+          <div className="analysis-skills">
+            <h3>Skills Found</h3>
 
-          {analysis.skills.length > 0 && (
-            <div className="result-detail">
-              <h3>Detected Skills</h3>
-              <div className="skills-list">
-                {analysis.skills.map((skill, index) => (
-                  <span key={index}>
-                    {typeof skill === "string"
-                      ? skill
-                      : skill.name || JSON.stringify(skill)}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {analysis.improvements.length > 0 && (
-            <div className="result-detail">
-              <h3>Recommended Improvements</h3>
+            {analysis.skills?.length > 0 ? (
               <ul>
-                {analysis.improvements.map((item, index) => (
-                  <li key={index}>
-                    {typeof item === "string"
-                      ? item
-                      : JSON.stringify(item)}
+                {analysis.skills.map((skill, index) => (
+                  <li key={`${skill}-${index}`}>
+                    {skill}
                   </li>
                 ))}
               </ul>
-            </div>
-          )}
+            ) : (
+              <p>No skills returned.</p>
+            )}
+          </div>
 
-          {analysis.status === "queued" && (
-            <p className="queued-note">
-              Your resume is queued for analysis. The final score may not
-              be available yet. Check{" "}
-              <Link to="/resumes">My Resumes</Link> for the latest status.
-            </p>
-          )}
+          <div className="analysis-improvements">
+            <h3>Areas to Improve</h3>
 
-          <Link to="/resumes" className="view-resumes-link">
-            View My Resumes
-          </Link>
-        </div>
+            {analysis.improvements?.length > 0 ? (
+              <ul>
+                {analysis.improvements.map((item, index) => (
+                  <li key={`${item}-${index}`}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No improvements returned.</p>
+            )}
+          </div>
+
+          <p className="analysis-completed">
+            <CheckCircle2 size={16} />
+            Analysis completed
+          </p>
+        </>
       )}
     </section>
   );
