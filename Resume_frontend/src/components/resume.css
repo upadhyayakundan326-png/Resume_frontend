@@ -340,3 +340,24 @@
     font-size: 15px;
   }
 }
+.resume-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.delete-resume-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #dc2626;
+    cursor: pointer;
+}
+
+.delete-resume-btn:hover {
+    background: #fee2e2;
+}

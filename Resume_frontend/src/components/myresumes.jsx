@@ -2,11 +2,15 @@ import { useEffect, useState } from "react";
 import { getAllResumes } from "../api/getresume_api";
 import Sidebar from "../sidebar/sidebar"
 import "./resume.css"
+ import { DeleteResumeApi } from "../api/delteapi"; 
+ import { Trash2 } from "lucide-react";
 
 function MyResumes() {
     const [resumes, setResumes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    
+
 
     useEffect(() => {
         const fetchResumes = async () => {
@@ -25,6 +29,29 @@ function MyResumes() {
 
     if (loading) return <p>Loading resumes...</p>;
     if (error) return <p>{error}</p>;
+
+    const handleDelete = async (resumeId) => {
+    const confirmDelete = window.confirm(
+        "Are you sure you want to delete this resume?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+        const data = await DeleteResumeApi(resumeId);
+
+        if (data.success) {
+            setResumes((prev) =>
+                prev.filter((item) => item._id !== resumeId)
+            );
+        } else {
+            alert(data.message);
+        }
+    } catch (error) {
+          console.error("DELETE ERROR:", error);
+        console.log(error);
+    }
+};
 
     return(
         <div className="my-resumes-layout">
@@ -83,6 +110,13 @@ function MyResumes() {
                                     >
                                         {item.status || "queued"}
                                     </span>
+                                      <button
+            className="delete-resume-btn"
+            onClick={() => handleDelete(item._id)}
+            title="Delete resume"
+        >
+            <Trash2 size={18} />
+        </button>
                                 </div>
 
                                 <h2 title={item.resumeName}>
@@ -103,7 +137,8 @@ function MyResumes() {
                                         <p>Resume Score</p>
                                         <strong>
                                             {item.status === "completed"
-                                                ? `${item.score ?? 0}/100`
+                      //nulish qualiscience operetor is use
+                                       ? `${item.score ?? 0}/100`
                                                 : "--/100"}
                                         </strong>
                                     </div>
