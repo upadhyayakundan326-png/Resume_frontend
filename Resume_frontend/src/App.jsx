@@ -10,6 +10,7 @@ import Home from "./pages/home";
 import Dashboard from "./components/analyzer";
 import Jobs from "./pages/job";
 import MyResumes from "./components/myresumes";
+import ProfileStats from "./components/profile";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
     path="/reset-password"
     element={<ResetPassword />}
   />
+  <Route path="/profile" element={<ProfileStats />} />
       
     </Routes>
   );
