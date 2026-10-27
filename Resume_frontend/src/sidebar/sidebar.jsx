@@ -8,6 +8,7 @@ import {
   BrainCircuit
 } from "lucide-react";
 import "./Sidebar.css";
+import Logout from "../components/logout";
 
 function Sidebar() {
   return (
@@ -46,11 +47,10 @@ function Sidebar() {
           <span>Profile</span>
         </NavLink>
 
-        <NavLink to="/logout" className="sidebar-link">
-          <FileSearch size={19} />
-          <span>Log out</span>
-        </NavLink>
+        
+
       </nav>
+      <Logout/>
 
       <div className="sidebar-footer">
         <span className="sidebar-status-dot" />

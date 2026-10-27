@@ -11,6 +11,7 @@ import Dashboard from "./components/analyzer";
 import Jobs from "./pages/job";
 import MyResumes from "./components/myresumes";
 import ProfileStats from "./components/profile";
+import Logout from "./components/logout";
 
 function App() {
   return (
@@ -33,8 +34,13 @@ function App() {
     element={<ResetPassword />}
   />
   <Route path="/profile" element={<ProfileStats />} />
+        
+
+        <Route path="/logout" element={<Logout/>} />
       
+    
     </Routes>
+
   );
 }
 

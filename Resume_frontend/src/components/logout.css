@@ -1,0 +1,55 @@
+.sidebar-logout {
+    margin-top: auto;
+    padding: 12px;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    color: #dc2626;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.logout-btn:hover {
+    background: #fee2e2;
+}
+
+.logout-confirm {
+    padding: 12px;
+    background: #f3e8ff;
+    border-radius: 10px;
+}
+
+.logout-confirm p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #581c87;
+}
+
+.logout-confirm-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.logout-confirm-actions button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.logout-confirm-actions button:first-child {
+    background: #7e22ce;
+    color: white;
+}
+
+.logout-confirm-actions button:last-child {
+    background: white;
+    color: #581c87;
+}
