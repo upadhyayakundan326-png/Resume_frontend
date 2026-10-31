@@ -54,7 +54,7 @@ function Login() {
 
       alert(data.message || "Login successful!");
 
-      navigate("/analyse");
+      navigate("/fetching");
     } catch (error) {
       console.log(error);
       alert("Could not connect to the server");

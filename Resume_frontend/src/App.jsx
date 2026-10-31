@@ -12,12 +12,15 @@ import Jobs from "./pages/job";
 import MyResumes from "./components/myresumes";
 import ProfileStats from "./components/profile";
 import Logout from "./components/logout";
+import Fetching from "./pages/fetchingprofilepage";
+
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+        <Route path="/fetching" element={<Fetching />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/otp" element={<Otp />} />
        <Route path="/analyse" element={<Dashboard />} />

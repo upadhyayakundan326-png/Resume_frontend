@@ -1,0 +1,69 @@
+
+.fetching {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #f8fafc;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Loading spinner */
+.fetching::before {
+    content: "";
+    width: 48px;
+    height: 48px;
+    border: 4px solid #e2e8f0;
+    border-top: 4px solid #7c3aed;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 25px;
+}
+
+/* Heading */
+.fetching h1 {
+    font-size: 25px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 12px;
+}
+
+/* Description */
+.fetching p {
+    font-size: 15px;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Spinner animation */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+    .fetching h1 {
+        font-size: 21px;
+    }
+
+    .fetching p {
+        font-size: 14px;
+    }
+
+    .fetching::before {
+        width: 40px;
+        height: 40px;
+    }
+}
