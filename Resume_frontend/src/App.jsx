@@ -8,11 +8,17 @@ import ForgotPassword from "./pages/forgot_pass";
 import ResetPassword from "./pages/reset_pass";
 import Home from "./pages/home";
 import Dashboard from "./components/analyzer";
-import Jobs from "./pages/job";
+
 import MyResumes from "./components/myresumes";
 import ProfileStats from "./components/profile";
 import Logout from "./components/logout";
 import Fetching from "./pages/fetchingprofilepage";
+
+import { Suspense, lazy } from "react";
+import Spinner from "./spinner/spiner";
+
+// lazy loading for job page 
+const Jobs = lazy(() => import("./pages/job"));
 
 
 function App() {
@@ -24,7 +30,16 @@ function App() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/otp" element={<Otp />} />
        <Route path="/analyse" element={<Dashboard />} />
-       <Route path="/jobs" element={<Jobs />} />
+      
+      
+       <Route
+    path="/jobs"
+    element={
+        <Suspense fallback={<Spinner message="Loading Jobs Page..." />}>
+            <Jobs />
+        </Suspense>
+    }
+/>
        <Route path="/resumes" element={<MyResumes />} />
       
 

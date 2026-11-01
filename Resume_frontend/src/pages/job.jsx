@@ -1,8 +1,9 @@
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { BriefcaseBusiness, Plus, CheckCircle } from "lucide-react";
 import "./job.css";
 import Sidebar from "../sidebar/sidebar";
+import Spinner from "../spinner/spiner";
 
 function Jobs() {
     const [formData, setFormData] = useState({
@@ -15,6 +16,9 @@ function Jobs() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [error, setError] = useState(false);
+    const [pageLoading, setPageLoading] = useState(true);
+
+  
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -24,7 +28,9 @@ function Jobs() {
             [name]: value
         });
     }
+       
 
+      
     async function handleSubmit(e) {
         e.preventDefault();
 
@@ -51,7 +57,8 @@ function Jobs() {
                             .filter(skill => skill !== "")
                     })
                 }
-            );
+                 
+            ); 
 
             const data = await response.json();
 
@@ -73,7 +80,10 @@ function Jobs() {
         } finally {
             setLoading(false);
         }
-    }
+    }  
+    
+    
+   
 
 return (
     <div className="jobs-page">

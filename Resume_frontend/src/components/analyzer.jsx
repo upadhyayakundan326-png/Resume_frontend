@@ -55,6 +55,9 @@ function Dashboard() {
       clearTimeout(pollingRef.current);
     };
   }, []);
+  if(jobsLoading){
+    return <Spinner message = "Loading......"/>
+  }
 
   // Resume file validation
   function handleFileChange(e) {
@@ -174,9 +177,9 @@ function Dashboard() {
       setLoading(false);
     }
   }
-  if(loading){
-      return <Spinner message="Loading..." />;
-  }
+     
+
+  
 
   return (
     <div className="dashboard-layout">

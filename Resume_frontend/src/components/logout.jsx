@@ -4,6 +4,7 @@ import { LogOut } from "lucide-react";
 import fetchlogoutApi from "../api/logout_api";
 import Sidebar from "../sidebar/sidebar";
 import "./logout.css"
+import Spinner from "../spinner/spiner";
 
 function Logout() {
 
@@ -27,6 +28,9 @@ function Logout() {
             setLoading(false);
         }
     };
+    if(loading){
+        return <Spinner message = "Logout......."/>
+    }
 
     return (
         <aside className="sidebar">
