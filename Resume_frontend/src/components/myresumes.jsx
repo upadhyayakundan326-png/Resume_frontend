@@ -4,6 +4,7 @@ import Sidebar from "../sidebar/sidebar"
 import "./resume.css"
  import { DeleteResumeApi } from "../api/delteapi"; 
  import { Trash2 } from "lucide-react";
+import Spinner from "../spinner/spiner";
 
 function MyResumes() {
     const [resumes, setResumes] = useState([]);
@@ -27,8 +28,11 @@ function MyResumes() {
         fetchResumes();
     }, []);
 
-    if (loading) return <p>Loading resumes...</p>;
+    
     if (error) return <p>{error}</p>;
+    if (loading){
+        return <Spinner message="Loading your resumes........"/>
+    }
 
     const handleDelete = async (resumeId) => {
     const confirmDelete = window.confirm(
@@ -51,8 +55,12 @@ function MyResumes() {
           console.error("DELETE ERROR:", error);
         console.log(error);
     }
-};
+       
 
+        
+}
+
+    
     return(
         <div className="my-resumes-layout">
             <Sidebar />

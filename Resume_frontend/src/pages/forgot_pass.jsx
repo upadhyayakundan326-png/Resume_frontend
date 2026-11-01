@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./forgot.css"
+import Spinner from "../spinner/spiner";
 
 function ForgotPassword() {
     const [email, setEmail] = useState("");
@@ -46,6 +47,10 @@ function ForgotPassword() {
             setLoading(false);
         }
     };
+     if (loading) {
+        return <Spinner message="Sending OTP to your email..." />;
+    }
+
 
     return (
         <div className="login-container">

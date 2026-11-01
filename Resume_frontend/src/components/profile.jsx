@@ -8,6 +8,7 @@ import {
     TrendingDown
 } from "lucide-react";
 import "./profile.css"
+import Spinner from "../spinner/spiner";
 const ProfileStats = () => {
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -29,7 +30,7 @@ const ProfileStats = () => {
     }, []);
 
     if (loading) {
-        return <p>Loading dashboard stats...</p>;
+        return  <Spinner message = "Loading our dashboard state......"/>
     }
 
     if (error) {
@@ -58,6 +59,10 @@ const ProfileStats = () => {
             icon: TrendingDown
         }
     ];
+         
+        if(loading){
+            return <Spinner message = "Loading......"/>
+        }
 return (<>
     <div className="dashboard-layout">
     <Sidebar/>

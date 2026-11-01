@@ -19,6 +19,7 @@ import { fetchJobsApi } from "../api/jobapi";
 import { uploadResumeApi } from "../api/uploadapi";
 import { fetchResumeStatusApi } from "../api/statesapi";
 import "./analyzer.css";
+import Spinner from "../spinner/spiner";
 
 function Dashboard() {
   const [resume, setResume] = useState(null);
@@ -172,6 +173,9 @@ function Dashboard() {
     } finally {
       setLoading(false);
     }
+  }
+  if(loading){
+      return <Spinner message="Loading..." />;
   }
 
   return (
