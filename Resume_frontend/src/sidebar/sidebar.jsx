@@ -7,7 +7,7 @@ import {
   UserRound,
   BrainCircuit
 } from "lucide-react";
-import "./Sidebar.css";
+import "./sidebar.css";
 import Logout from "../components/logout";
 
 function Sidebar() {
