@@ -4,9 +4,10 @@ export async function uploadResumeApi(resume, selectedJobId) {
 
   formData.append("resume", resume);
   formData.append("jobId", selectedJobId);
+      const API = import.meta.env.VITE_API_URL
 
   const response = await fetch(
-    "http://localhost:8000/api/resume/upload",
+    `${API}/api/resume/upload`,
     {
       method: "POST",
       credentials: "include",

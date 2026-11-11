@@ -6,11 +6,12 @@ import {
   UserRound,
   Mail,
   LockKeyhole,
-  ReceiptPoundSterling,
+
 } from "lucide-react";
+    const API = import.meta.env.VITE_API_URL
 
 function Signup(){
-    const API_URL = "http://localhost:8000/api/auth/signup"
+    const API_URL = `${API}/api/auth/signup`
 
     const navigate = useNavigate();
     

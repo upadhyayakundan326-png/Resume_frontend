@@ -2,14 +2,14 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect } from "react";
 import "./fetch.css"
-
+    const API = import.meta.env.VITE_API_URL
 function Fetching(){
   const navigate = useNavigate()
 
   useEffect(()=>{
     const fetchprofile = async()=>{
         try{
-        const response = await fetch("http://localhost:8000/api/getprofile/profile",{
+        const response = await fetch(`${API}/api/getprofile/profile`,{
             method :"GET",
             credentials:"include"
         })

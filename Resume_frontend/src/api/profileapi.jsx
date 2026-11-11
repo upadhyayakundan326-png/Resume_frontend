@@ -1,7 +1,9 @@
-const API_URL  =  "http://localhost:8000/api/dashboard/dash"
 
+const API = import.meta.env.VITE_API_URL
 const Profile = async()=>{
-    const response = await fetch(API_URL,{
+    const response = await fetch(
+        `${API}/api/dashboard/dash`
+        ,{
         method:"GET",
         credentials:"include"
     })

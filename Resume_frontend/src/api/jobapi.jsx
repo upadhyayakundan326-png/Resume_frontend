@@ -1,7 +1,8 @@
 
+const API = import.meta.env.VITE_API_URL
 export async function fetchJobsApi() {
   const response = await fetch(
-    "http://localhost:8000/api/job",
+    `${API}/api/job`,
     {
       credentials: "include"
     }

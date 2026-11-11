@@ -1,7 +1,7 @@
-
+    const API = import.meta.env.VITE_API_URL
 export async function fetchResumeStatusApi(resumeId) {
   const response = await fetch(
-    `http://localhost:8000/api/states/getStates/${resumeId}`,
+    `${API}/api/states/getStates/${resumeId}`,
     {
       credentials: "include"
     }

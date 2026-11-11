@@ -17,6 +17,7 @@ function Jobs() {
     const [message, setMessage] = useState("");
     const [error, setError] = useState(false);
     const [pageLoading, setPageLoading] = useState(true);
+        const API = import.meta.env.VITE_API_URL
 
   
 
@@ -40,7 +41,7 @@ function Jobs() {
 
         try {
             const response = await fetch(
-                "http://localhost:8000/api/job/create",
+                `${API}/api/job/create`,
                 {
                     method: "POST",
                     credentials: "include",

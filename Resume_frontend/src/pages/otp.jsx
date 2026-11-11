@@ -3,7 +3,7 @@ import {useState} from "react"
 import "./otp.css"
 
 function Otp(){
-    const API_URL= "http://localhost:8000/api/auth/verify"
+        const API = import.meta.env.VITE_API_URL
 
     const [otp,setotp]=useState(null)
         const [email,setemail]=useState("")
@@ -14,7 +14,9 @@ function Otp(){
         
         
             try{
-      const response = await fetch(API_URL,{
+      const response = await fetch(
+        `${API}/api/auth/verify`
+        ,{
          method: "POST",
     headers: {
       "Content-Type": "application/json",

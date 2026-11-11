@@ -1,7 +1,9 @@
 
+
+  const API = import.meta.env.VITE_API_URL
 const DeleteResumeApi = async (resumeId) => {
     const response = await fetch(
-        `http://localhost:8000/api/delete/del/${resumeId}`,
+        `${API}/api/delete/del/${resumeId}`,
         {
             method: "DELETE",
             credentials: "include"

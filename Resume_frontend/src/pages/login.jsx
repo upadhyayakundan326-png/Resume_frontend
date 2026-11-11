@@ -8,9 +8,10 @@ import {
   Mail,
   LockKeyhole,
 } from "lucide-react";
+    const API = import.meta.env.VITE_API_URL
 
 function Login() {
-  const API_URL = "http://localhost:8000/api/auth/login";
+  const API_URL = `${API}/api/auth/login`;
 
   const navigate = useNavigate();
 

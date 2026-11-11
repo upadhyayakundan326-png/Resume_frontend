@@ -1,6 +1,8 @@
+
+const API = import.meta.env.VITE_API_URL
 const fetchlogoutApi = async () => {
     const response = await fetch(
-        "http://localhost:8000/api/auth/logout",
+       `${API}/api/auth/logout`,
         {
             method: "POST",
             credentials: "include"

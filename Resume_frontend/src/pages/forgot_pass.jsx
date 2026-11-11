@@ -10,6 +10,7 @@ function ForgotPassword() {
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
+        const API = import.meta.env.VITE_API_URL
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,7 +19,7 @@ function ForgotPassword() {
 
         try {
             const response = await fetch(
-                "http://localhost:8000/api/changepass/forgot-password",
+                `${API}/api/changepass/forgot-password`,
                 {
                     method: "POST",
                     headers: {
