@@ -1,68 +1,111 @@
+
 import { useState } from "react";
 import "./signup.css";
 import { useNavigate } from "react-router-dom";
+
 import {
   FileUser,
   UserRound,
   Mail,
   LockKeyhole,
-
 } from "lucide-react";
-    const API = import.meta.env.VITE_API_URL
 
-function Signup(){
-    const API_URL = `${API}/api/auth/signup`
+const API = import.meta.env.VITE_API_URL;
 
-    const navigate = useNavigate();
-    
-    const[formdata,setformdata]=useState({
-        userName:"",
-        email:"",
-        password:""
-    })
-     const [message, setMessage] = useState("");
-  //const [loading, setLoading] = useState(false);
+function Signup() {
+  const API_URL = `${API}/api/auth/signup`;
 
+  const navigate = useNavigate();
 
-    function handleChange(e){
-        setformdata({
-            ...formdata,
-            [e.target.name]:e.target.value
-        })
+  const [formdata, setformdata] = useState({
+    userName: "",
+    email: "",
+    password: "",
+  });
+
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  function handleChange(e) {
+    setformdata({
+      ...formdata,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log("========== SIGNUP DEBUG START ==========");
+    console.log("STEP 1: Button clicked");
+    console.log("STEP 2: API URL:", API_URL);
+    console.log("STEP 3: Form submitted");
+
+    if (!API) {
+      console.error("ERROR: VITE_API_URL is missing");
+      setMessage("API URL is missing");
+      return;
     }
-    
-     const handleSubmit = async(e)=>{
-      e.preventDefault();
-      console.log("button clicked")
-    try{
-      const response = await fetch(API_URL,{
-         method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify(formdata),
-      })
+
+    setLoading(true);
+    setMessage("Creating account...");
+
+    try {
+      console.log("STEP 4: Sending request to backend...");
+
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(formdata),
+      });
+
+      console.log("STEP 5: Response received");
+      console.log("HTTP STATUS:", response.status);
+      console.log("STATUS TEXT:", response.statusText);
 
       const data = await response.json();
-      if(!response.ok){
-        console.log("unsuccesful")
-        alert(data.message||"signup unsuccesfull");
-       
-        return
+
+      console.log("STEP 6: Backend response:", data);
+
+      if (!response.ok) {
+        console.error("SIGNUP FAILED:", data);
+
+        setMessage(data.message || "Signup unsuccessful");
+
+        alert(data.message || "Signup unsuccessful");
+
+        return;
       }
-      alert(data.message||"signup succesfull,check email for your otp")
-    console.log("succesfull")
-    navigate("/otp")
+
+      console.log("STEP 7: Signup successful");
+
+      setMessage("OTP sent successfully. Check your email.");
+
+      alert(data.message || "Signup successful. Check your email.");
+
+      console.log("STEP 8: Navigating to OTP page");
+
+      navigate("/otp");
+
+    } catch (error) {
+      console.error("SIGNUP CATCH ERROR:", error);
+      console.error("ERROR MESSAGE:", error.message);
+
+      setMessage("Server connection failed");
+
+      alert(error.message || "Could not connect to server");
+
+    } finally {
+      setLoading(false);
+      console.log("========== SIGNUP DEBUG END ==========");
     }
-    catch(error){
-        console.log("server issue")
-       alert(error.message||"could not connect to the server") 
-       return
-    }
-     }
-     return(
-          <main className="signup-container">
+  };
+
+  return (
+    <main className="signup-container">
       <form className="signup-form" onSubmit={handleSubmit}>
         <div className="signup-heading">
           <div className="signup-logo">
@@ -74,8 +117,10 @@ function Signup(){
         </div>
 
         <label htmlFor="userName">Username</label>
+
         <div className="input-group">
           <UserRound size={21} />
+
           <input
             id="userName"
             type="text"
@@ -88,8 +133,10 @@ function Signup(){
         </div>
 
         <label htmlFor="email">Email</label>
+
         <div className="input-group">
           <Mail size={21} />
+
           <input
             id="email"
             type="email"
@@ -102,8 +149,10 @@ function Signup(){
         </div>
 
         <label htmlFor="password">Password</label>
+
         <div className="input-group">
           <LockKeyhole size={21} />
+
           <input
             id="password"
             type="password"
@@ -115,23 +164,27 @@ function Signup(){
           />
         </div>
 
-        <button type="submit">Create Account</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Creating Account..." : "Create Account"}
+        </button>
+
         <div className="login">
-        <p className="signup-footer">
-  Already have an account?{" "}
-  <span onClick={() => navigate("/login")}>
-    Login
-  </span>
-</p>
-</div>
+          <p className="signup-footer">
+            Already have an account?{" "}
+            <span onClick={() => navigate("/login")}>
+              Login
+            </span>
+          </p>
+        </div>
+
         {message && (
           <p className="signup-message" role="status">
             {message}
           </p>
-          
         )}
       </form>
     </main>
-     )
-    }
-    export default Signup
+  );
+}
+
+export default Signup;
