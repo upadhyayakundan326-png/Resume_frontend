@@ -48,7 +48,7 @@ function Signup(){
       if(!response.ok){
         console.log("unsuccesful")
         alert(data.message||"signup unsuccesfull");
-        ReceiptPoundSterling
+       
         return
       }
       alert(data.message||"signup succesfull,check email for your otp")
