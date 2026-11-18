@@ -10,9 +10,11 @@ import {
   LoaderCircle,
   RefreshCw,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  Trash2
 } from "lucide-react";
 
+import { deleteSavedJobAPI } from "../api/deljobapi";
 import Sidebar from "../sidebar/sidebar";
 import AnalysisResult from "./analysis";
 import { fetchJobsApi } from "../api/jobapi";
@@ -27,13 +29,14 @@ function Dashboard() {
   const [selectedJobId, setSelectedJobId] = useState("");
   const [jobsLoading, setJobsLoading] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
   const [analysis, setAnalysis] = useState(null);
 
   const pollingRef = useRef(null);
 
-  // 1. JOBS API
+  // 1. LOAD SAVED JOBS
   async function loadJobs() {
     setJobsLoading(true);
 
@@ -55,11 +58,48 @@ function Dashboard() {
       clearTimeout(pollingRef.current);
     };
   }, []);
-  if(jobsLoading){
-    return <Spinner message = "Loading......"/>
+
+  // 2. DELETE SAVED JOB
+  async function handleDeleteJob() {
+    if (!selectedJobId) {
+      setMessage("Please select a job first.");
+      setMessageType("error");
+      return;
+    }
+
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this saved job?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      setDeleting(true);
+      setMessage("");
+      setMessageType("");
+
+      const data = await deleteSavedJobAPI(selectedJobId);
+
+      if (data.success) {
+        setJobs((prev) =>
+          prev.filter((job) => job._id !== selectedJobId)
+        );
+
+        setSelectedJobId("");
+        setAnalysis(null);
+
+        setMessage("Saved job deleted successfully.");
+        setMessageType("success");
+      }
+    } catch (error) {
+      setMessage(error.message);
+      setMessageType("error");
+    } finally {
+      setDeleting(false);
+    }
   }
 
-  // Resume file validation
+  // 3. RESUME FILE VALIDATION
   function handleFileChange(e) {
     const file = e.target.files[0];
 
@@ -86,7 +126,7 @@ function Dashboard() {
     setMessageType("");
   }
 
-  // 3. STATES API POLLING
+  // 4. RESUME STATUS POLLING
   async function pollResumeStatus(resumeId) {
     clearTimeout(pollingRef.current);
 
@@ -124,7 +164,7 @@ function Dashboard() {
     await checkStatus();
   }
 
-  // 2. UPLOAD API
+  // 5. RESUME UPLOAD AND ANALYSIS
   async function handleAnalyse(e) {
     e.preventDefault();
 
@@ -177,15 +217,17 @@ function Dashboard() {
       setLoading(false);
     }
   }
-     
 
-  
+  if (jobsLoading) {
+    return <Spinner message="Loading......" />;
+  }
 
   return (
     <div className="dashboard-layout">
       <Sidebar />
 
       <main className="dashboard-main">
+
         <header className="dashboard-header">
           <div>
             <span className="dashboard-eyebrow">
@@ -205,7 +247,7 @@ function Dashboard() {
             type="button"
             className="refresh-jobs-btn"
             onClick={loadJobs}
-            disabled={jobsLoading}
+            disabled={jobsLoading || deleting}
           >
             <RefreshCw size={15} />
             Refresh Jobs
@@ -213,10 +255,15 @@ function Dashboard() {
         </header>
 
         <section className="upload-card">
+
           <div className="section-heading">
             <div>
-              <span className="dashboard-eyebrow">STEP 01</span>
+              <span className="dashboard-eyebrow">
+                STEP 01
+              </span>
+
               <h2>Upload your resume</h2>
+
               <p>
                 Choose a target job to compare your resume against.
               </p>
@@ -228,41 +275,91 @@ function Dashboard() {
           </div>
 
           <form onSubmit={handleAnalyse}>
+
             <div className="form-group">
+
               <label htmlFor="jobId">
                 <BriefcaseBusiness size={16} />
                 Target Job
               </label>
 
-              <select
-                id="jobId"
-                value={selectedJobId}
-                onChange={(e) => {
-                  setSelectedJobId(e.target.value);
-                  setAnalysis(null);
-                }}
-                disabled={jobsLoading || loading}
-                required
-              >
-                <option value="">
-                  {jobsLoading ? "Loading jobs..." : "Select a saved job"}
-                </option>
+              {/* JOB DROPDOWN + DELETE BUTTON */}
 
-                {jobs.map((job) => (
-                  <option key={job._id} value={job._id}>
-                    {job.title} — {job.company}
+              <div
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  alignItems: "center"
+                }}
+              >
+
+                <select
+                  id="jobId"
+                  value={selectedJobId}
+                  onChange={(e) => {
+                    setSelectedJobId(e.target.value);
+                    setAnalysis(null);
+                  }}
+                  disabled={jobsLoading || loading || deleting}
+                  required
+                  style={{
+                    flex: 1,
+                    minWidth: 0
+                  }}
+                >
+                  <option value="">
+                    Select a saved job
                   </option>
-                ))}
-              </select>
+
+                  {jobs.map((job) => (
+                    <option key={job._id} value={job._id}>
+                      {job.title} — {job.company}
+                    </option>
+                  ))}
+                </select>
+
+                <button
+                  type="button"
+                  onClick={handleDeleteJob}
+                  disabled={!selectedJobId || loading || deleting}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    padding: "14px 16px",
+                    background: "#fee2e2",
+                    color: "#dc2626",
+                    border: "1px solid #fecaca",
+                    borderRadius: "10px",
+                    cursor: selectedJobId ? "pointer" : "not-allowed",
+                    opacity: selectedJobId ? 1 : 0.5,
+                    whiteSpace: "nowrap"
+                  }}
+                >
+                  {deleting ? (
+                    <LoaderCircle size={17} className="spin" />
+                  ) : (
+                    <Trash2 size={17} />
+                  )}
+
+                  {deleting ? "Deleting..." : "Delete"}
+                </button>
+
+              </div>
 
               {!jobsLoading && jobs.length === 0 && (
                 <p className="helper-text">
-                  No saved jobs yet. <Link to="/jobs">Create a job first</Link>
+                  No saved jobs yet.
+                  <Link to="/jobs"> Create a job first</Link>
                 </p>
               )}
+
             </div>
 
-            <label className="resume-dropzone" htmlFor="resumeFile">
+            <label
+              className="resume-dropzone"
+              htmlFor="resumeFile"
+            >
               <input
                 id="resumeFile"
                 type="file"
@@ -276,7 +373,9 @@ function Dashboard() {
                 <Upload size={27} />
               </div>
 
-              <h3>{resume ? resume.name : "Upload Resume"}</h3>
+              <h3>
+                {resume ? resume.name : "Upload Resume"}
+              </h3>
 
               <p>
                 {resume
@@ -300,11 +399,13 @@ function Dashboard() {
                 ) : (
                   <CheckCircle2 size={17} />
                 )}
+
                 <span>{message}</span>
               </div>
             )}
 
             <div className="upload-footer">
+
               <span className="privacy-note">
                 <CheckCircle2 size={15} />
                 Ready for AI review
@@ -313,7 +414,12 @@ function Dashboard() {
               <button
                 type="submit"
                 className="analyse-button"
-                disabled={loading || jobsLoading || jobs.length === 0}
+                disabled={
+                  loading ||
+                  jobsLoading ||
+                  deleting ||
+                  jobs.length === 0
+                }
               >
                 {loading ? (
                   <>
@@ -327,12 +433,14 @@ function Dashboard() {
                   </>
                 )}
               </button>
+
             </div>
+
           </form>
         </section>
 
-        {/* Props pass karke analysis UI dikhana */}
         <AnalysisResult analysis={analysis} />
+
       </main>
     </div>
   );
