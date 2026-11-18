@@ -1,4 +1,6 @@
 
+/* Main layout */
+
 .jobs-page {
     display: flex;
     min-height: 100vh;
@@ -7,6 +9,7 @@
     color: #0f172a;
     font-family: Arial, sans-serif;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .jobs-page *,
@@ -15,19 +18,23 @@
     box-sizing: border-box;
 }
 
-/* Right-side content */
+/* Main content */
+
 .jobs-content {
     flex: 1;
     min-width: 0;
+    width: 100%;
     padding: 36px 40px;
 }
 
-/* Page heading */
+/* Heading */
+
 .jobs-heading {
     display: flex;
     align-items: center;
     gap: 16px;
-    margin: 0 0 30px;
+    margin-bottom: 30px;
+    min-width: 0;
 }
 
 .jobs-heading-icon {
@@ -58,6 +65,7 @@
 }
 
 /* Form card */
+
 .jobs-form-card {
     width: 100%;
     max-width: 780px;
@@ -86,12 +94,14 @@
     line-height: 1.6;
 }
 
-/* Form fields */
+/* Form */
+
 .jobs-form {
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding-top: 22px;
+    width: 100%;
 }
 
 .jobs-field {
@@ -99,6 +109,7 @@
     flex-direction: column;
     gap: 8px;
     min-width: 0;
+    width: 100%;
 }
 
 .jobs-field label {
@@ -109,7 +120,9 @@
 
 .jobs-field input,
 .jobs-field textarea {
+    display: block;
     width: 100%;
+    max-width: 100%;
     min-width: 0;
     padding: 12px 14px;
     border: 1px solid #cbd5e1;
@@ -146,9 +159,11 @@
 .jobs-field-hint {
     color: #94a3b8;
     font-size: 12px;
+    line-height: 1.5;
 }
 
 /* Messages */
+
 .jobs-success,
 .jobs-error {
     margin: 0;
@@ -156,6 +171,7 @@
     border-radius: 8px;
     font-size: 14px;
     line-height: 1.5;
+    overflow-wrap: anywhere;
 }
 
 .jobs-success {
@@ -170,7 +186,8 @@
     border: 1px solid #fecaca;
 }
 
-/* Save button */
+/* Button */
+
 .save-job-button {
     display: flex;
     align-items: center;
@@ -199,6 +216,7 @@
 }
 
 /* Tablet */
+
 @media (max-width: 900px) {
     .jobs-content {
         padding: 28px 24px;
@@ -211,40 +229,129 @@
 }
 
 /* Mobile */
+
 @media (max-width: 600px) {
+    .jobs-page {
+        width: 100%;
+        min-height: 100vh;
+    }
+
     .jobs-content {
+        width: 100%;
+        min-width: 0;
         padding: 22px 15px;
     }
 
     .jobs-heading {
         align-items: flex-start;
         gap: 12px;
-        margin-bottom: 24px;
+        margin-bottom: 22px;
     }
 
     .jobs-heading-icon {
-        width: 44px;
-        height: 44px;
+        width: 42px;
+        height: 42px;
+    }
+
+    .jobs-heading-icon svg {
+        width: 21px;
+        height: 21px;
     }
 
     .jobs-heading h1 {
-        font-size: 24px;
+        font-size: 23px;
+        margin-bottom: 5px;
     }
 
     .jobs-heading p {
-        font-size: 13px;
+        font-size: 12px;
+        line-height: 1.5;
     }
 
     .jobs-form-card {
+        width: 100%;
+        max-width: 100%;
         padding: 19px 15px;
-        border-radius: 11px;
+        border-radius: 12px;
+    }
+
+    .jobs-form-header {
+        padding-bottom: 17px;
     }
 
     .jobs-form-header h2 {
         font-size: 19px;
     }
 
+    .jobs-form-header p {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
     .jobs-form {
-        gap: 18px;
+        gap: 17px;
+        padding-top: 18px;
+    }
+
+    .jobs-field {
+        gap: 7px;
+    }
+
+    .jobs-field label {
+        font-size: 13px;
+    }
+
+    .jobs-field input,
+    .jobs-field textarea {
+        font-size: 14px;
+        padding: 11px 12px;
+        border-radius: 8px;
+    }
+
+    .jobs-field input {
+        height: 44px;
+    }
+
+    .jobs-field textarea {
+        min-height: 125px;
+    }
+
+    .jobs-field-hint {
+        font-size: 11px;
+    }
+
+    .save-job-button {
+        min-height: 45px;
+        font-size: 13px;
+    }
+
+    .jobs-success,
+    .jobs-error {
+        font-size: 12px;
+        padding: 10px;
+    }
+}
+
+/* Small phones */
+
+@media (max-width: 360px) {
+    .jobs-content {
+        padding: 18px 11px;
+    }
+
+    .jobs-heading {
+        gap: 9px;
+    }
+
+    .jobs-heading h1 {
+        font-size: 21px;
+    }
+
+    .jobs-form-card {
+        padding: 16px 12px;
+    }
+
+    .jobs-form {
+        gap: 15px;
     }
 }
