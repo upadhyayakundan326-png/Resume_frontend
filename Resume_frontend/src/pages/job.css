@@ -355,3 +355,27 @@
         gap: 15px;
     }
 }
+
+/* Mobile layout fix */
+@media (max-width: 650px) {
+
+    .jobs-page {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    .jobs-content {
+        width: 100%;
+        min-width: 0;
+        flex: 1 1 auto;
+        padding: 22px 15px;
+    }
+
+    .jobs-form-card {
+        width: 100%;
+        max-width: 100%;
+    }
+}
